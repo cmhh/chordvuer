@@ -6,32 +6,28 @@
 <script>
 export default {
   data() {
-    return {chordname: null}
-  },
-  computed: {
-    chordInfo() {
-      return chords[this.chordname]
+    return {
+      selected: "A"
     }
+  },
+  ready() {
+
   }
 }
 </script>
 
 
 <template>
-<Chord id="chord1" :chord="chords.Em" />
-<Chord id="chord2" :chord="chords.Gmaj" />
-
-
 <div>
-<div>Selected: {{ chordname }}</div>
-<label for="chord-name">Choose a chord:</label>
-<select v-model="chordname">
-  <option value="Em" selected>E minor</option>
-  <option value="Gmaj">G major</option>
+<label for="chord-name">Choose a chord: </label>
+<select v-model="selected">
+  <option v-for="(v, k) in chords" :value="k" :key="k" :selected="selected" >
+   {{ v.name }}
+  </option>
 </select>
 <hr>
-<Chord id="chord3" v-bind:chord="chordInfo" />
-</div>
+<Chord id="chord1" v-bind:chord="chords[this.selected]" />
+</div> 
 
 </template>
 

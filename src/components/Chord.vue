@@ -1,9 +1,6 @@
 <script>
   export default {
     name: "Chord",
-    data() {
-      return {current: null}
-    },
     props: {
       id: {
         type: String,
@@ -48,9 +45,8 @@
         if (!newVal) return
         this.applyTitle(newVal, oldVal)
         this.applyFingers(newVal)
-        this.applyStrike()
-        this.applyNotes()      
-        this.current = this.chord
+        this.applyStrike(newVal)
+        this.applyNotes(newVal) 
       },
       async applyTitle(newVal, oldVal) {
         const svg = document.getElementById(this.id)
@@ -86,16 +82,15 @@
             this.fadein(l)
           })
         } else if (prevshp.length > 0 && thisfinger) {     // move
-          // fade out strings, ex. 1st listed
           if (prevshp.length > 1) {
-            for (var i=1; i < prev.length; i++) {
+            for (var i=1; i < prevshp.length; i++) {
               this.fadeout(prevshp[i])
               this.fadeout(prevtxt[i])
             }
           }
 
           // fade in strings, ex. 1st listed
-          if (thisfinger.strings > 1) {
+          if (thisfinger.strings.length > 1) {
             thisfinger.strings.slice(1).map((x) => {
               const [c, l] = this.makeFinger(fingerno, x, thisfinger.fret)
               svg.appendChild(c)
@@ -132,14 +127,14 @@
 
         return [circ, lbl]
       },
-      async applyStrike() {
+      async applyStrike(newVal) {
         if (!this.chord) return null
         const svg = document.getElementById(this.id)
         const els = Array.prototype.slice.call(svg.getElementsByClassName("strike"))
 
         const newlbl = [1,2,3,4,5,6].map((x) => {
-          if (this.chord.open.includes(x)) return "O"
-          if (this.chord.closed.includes(x)) return "X"
+          if (newVal.open.includes(x)) return "◯"
+          if (newVal.closed.includes(x)) return "⨯"
           return ""
         })
 
@@ -147,12 +142,12 @@
           if (el.textContent != newlbl[i]) this.swaptxt(el, newlbl[i])
         })
       },
-      async applyNotes() {
+      async applyNotes(newVal) {
         const svg = document.getElementById(this.id)
         const els = Array.prototype.slice.call(svg.getElementsByClassName("note"))
 
         const newlbl = [1,2,3,4,5,6].map((x) => {
-          const z = this.chord.fingers.filter((y) => y.strings.includes(x)).map((y) => y.fret)
+          const z = newVal.fingers.filter((y) => y.strings.includes(x)).map((y) => y.fret)
           if (z.length == 0) return this.note(x, 0)
           else return this.note(x, Math.max(...z))
         })

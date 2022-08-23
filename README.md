@@ -2,8 +2,6 @@
 
 Display guitar chords, with animated transitions between chords.
 
-![](img/chordvuer.webp)
-
 ## Project Setup
 
 ```sh
@@ -29,7 +27,7 @@ npm run build
 <head>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.global.prod.min.js"></script>
-  <script src="dist/chordvuer.umd.js"></script>
+  <script src="./dist/chordvuer.umd.js"></script>
   <link rel="stylesheet" href="./dist/style.css">
 
   <style>
@@ -41,14 +39,26 @@ npm run build
 </head>
 <body>
   <div id="app">
-    <chord 
-      id="chord1"
-      :chord='chords.Gmaj'
-    ></chord>
+    <div>
+    <label for="chord-name">Chord: </label>
+    <select v-model="selected">
+      <option v-for="(v, k) in chords" :value="k" :key="k" :selected="selected" >
+       {{ v.name }}
+      </option>
+    </select>
+    <hr>
+    <chord id="chord1" v-bind:chord="chords[this.selected]"></chord>
+    </div> 
   </div>
 
   <script>
-    const app = Vue.createApp({})
+    const app = Vue.createApp({
+      data () {
+        return {
+          selected: "A"
+        }
+      }
+    })
     app.config.globalProperties.chords = window.chordvuer.chords;
     app.component('chord', chordvuer.Chord)
     app.mount('#app')
@@ -57,4 +67,4 @@ npm run build
 </html>
 ```
 
-![](img/gmaj.png)
+![](img/chordvuer.webp)
