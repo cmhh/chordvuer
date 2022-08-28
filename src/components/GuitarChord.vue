@@ -1,14 +1,10 @@
 <script>
   export default {
-    name: "Chord",
+    name: "GuitarChord",
     props: {
       id: {
         type: String,
         required: true
-      },
-      transitionSpeed: {
-        type: Number,
-        default: 1000
       },
       duration: {
         type: Number, 
@@ -20,7 +16,7 @@
       },
       chord: {
         type: Object,
-        required: true
+        default: {}
       }
     },
     computed: {
@@ -41,8 +37,24 @@
       this.applyAll(this.chord, null)
     },
     methods: {
+      async clear() {
+        const svg = document.getElementById(this.id)
+        Array.prototype.slice.call(svg.getElementsByClassName("finger")).forEach((x) => svg.removeChild(x))
+        Array.prototype.slice.call(svg.getElementsByClassName("chord-name")).forEach((x) => this.swaptxt(x, ''))
+        Array.prototype.slice.call(svg.getElementsByClassName("strike")).forEach((x) => this.swaptxt(x, ''))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-high-e")).forEach((x) => this.swaptxt(x, 'E'))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-b")).forEach((x) => this.swaptxt(x, 'B'))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-g")).forEach((x) => this.swaptxt(x, 'G'))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-d")).forEach((x) => this.swaptxt(x, 'D'))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-a")).forEach((x) => this.swaptxt(x, 'A'))
+        Array.prototype.slice.call(svg.getElementsByClassName("note-low-e")).forEach((x) => this.swaptxt(x, 'E'))
+      },
       async applyAll(newVal, oldVal) {
-        if (!newVal) return
+        if (!newVal || Object.keys(newVal).length === 0) {
+          this.clear()
+          return
+        }
+        
         this.applyTitle(newVal, oldVal)
         this.applyFingers(newVal)
         this.applyStrike(newVal)
@@ -70,7 +82,6 @@
         const thisfinger = newVal.fingers.filter((x) => x.finger == fingerno)[0]
 
         if (prevshp.length > 0 && !thisfinger) {           // fade out
-          if (fingerno == 2) console.log("fading out, man.")
           prevshp.forEach((x) => this.fadeout(x))
           prevtxt.forEach((x) => this.fadeout(x))
         } else if (prevshp.length == 0 && thisfinger) {    // fade in
@@ -134,7 +145,7 @@
 
         const newlbl = [1,2,3,4,5,6].map((x) => {
           if (newVal.open.includes(x)) return "◯"
-          if (newVal.closed.includes(x)) return "⨯"
+          if (newVal.closed.includes(x)) return "Ｘ"
           return ""
         })
 

@@ -47,7 +47,7 @@ npm run build
       </option>
     </select>
     <hr>
-    <chord id="chord1" v-bind:chord="chords[this.selected]"></chord>
+    <guitar-chord id="chord1" v-bind:chord="chords[this.selected]"></guitar-chord>
     </div> 
   </div>
 
@@ -60,7 +60,7 @@ npm run build
       }
     })
     app.config.globalProperties.chords = window.chordvuer.chords;
-    app.component('chord', chordvuer.Chord)
+    app.component('guitar-chord', chordvuer.GuitarChord)
     app.mount('#app')
   </script>
 </body>

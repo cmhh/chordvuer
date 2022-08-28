@@ -18,16 +18,16 @@ export const chords = {
     open: [5,3,1],
     closed: [6]
   },
-  Am: {
-    name: "A Minor",
-    fingers: [
-      {finger: 2, fret: 2, strings: [4]},
-      {finger: 3, fret: 2, strings: [3]},
-      {finger: 1, fret: 1, strings: [2]}
-    ],
-    open: [5,1],
-    closed: [6]
-  },
+    Am: {
+      name: "A Minor",
+      fingers: [
+        {finger: 2, fret: 2, strings: [4]},
+        {finger: 3, fret: 2, strings: [3]},
+        {finger: 1, fret: 1, strings: [2]}
+      ],
+      open: [5,1],
+      closed: [6]
+    },
   B7: {
     name: "B Dominant 7",
     fingers: [
