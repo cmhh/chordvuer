@@ -28,6 +28,27 @@ export const chords = {
       open: [5,1],
       closed: [6]
     },
+  B1: {
+    name: "B",
+    fingers: [
+      {finger: 1, fret: 2, strings: [1,2,3,4,5]},
+      {finger: 2, fret: 4, strings: [4]},
+      {finger: 3, fret: 4, strings: [3]},
+      {finger: 4, fret: 4, strings: [2]}
+    ],
+    open: [],
+    closed: [6]
+  },
+  B2: {
+    name: "B",
+    fingers: [
+      {finger: 1, fret: 2, strings: [1]},
+      {finger: 3, fret: 4, strings: [3]},
+      {finger: 4, fret: 4, strings: [2]}
+    ],
+    open: [],
+    closed: [6,5,4]
+  },
   B7: {
     name: "B Dominant 7",
     fingers: [
@@ -133,8 +154,7 @@ export const chords = {
     fingers: [
       {finger: 1, fret: 2, strings: [5]},
       {finger: 2, fret: 3, strings: [6]},
-      {finger: 3, fret: 3, strings: [2]},
-      {finger: 4, fret: 3, strings: [1]}
+      {finger: 3, fret: 3, strings: [1]}
     ],
     open: [3, 4],
     closed: []
