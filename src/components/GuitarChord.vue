@@ -58,7 +58,8 @@
         this.applyTitle(newVal, oldVal)
         this.applyFingers(newVal)
         this.applyStrike(newVal)
-        this.applyNotes(newVal) 
+        this.applyNotes(newVal)
+        this.applyFrets(newVal)
       },
       async applyTitle(newVal, oldVal) {
         const svg = document.getElementById(this.id)
@@ -70,11 +71,28 @@
           this.fadein(name)
         }
       },
+      async applyFrets(newVal) {        
+        const svg = document.getElementById(this.id)
+        const els = Array.prototype.slice.call(svg.getElementsByClassName("fret-number"))
+
+        const offset = this.fretOffset(newVal)
+
+        const newlbl = [1,2,3,4,5].map((x) => {
+          if (offset == 0) return ""
+          else return `${x + offset}`
+        })
+
+        els.forEach((el, i) => {
+          if (el.textContent != newlbl[i]) this.swaptxt(el, newlbl[i])
+        })
+      },
       async applyFingers(newVal) {
         [1,2,3,4].forEach((x) => this.applyFinger(x, newVal))
       },
       async applyFinger(fingerno, newVal) {
         const svg = document.getElementById(this.id)
+
+        const offset = this.fretOffset(newVal)
 
         const prevshp = svg.querySelectorAll(`circle.finger-${fingerno}`)
         const prevtxt = svg.querySelectorAll(`text.finger-${fingerno}`)
@@ -86,7 +104,7 @@
           prevtxt.forEach((x) => this.fadeout(x))
         } else if (prevshp.length == 0 && thisfinger) {    // fade in
           thisfinger.strings.map((x) => {
-            const [c, l] = this.makeFinger(fingerno, x, thisfinger.fret)
+            const [c, l] = this.makeFinger(fingerno, x, thisfinger.fret - offset)
             svg.appendChild(c)
             svg.appendChild(l)
             this.fadein(c)
@@ -103,7 +121,7 @@
           // fade in strings, ex. 1st listed
           if (thisfinger.strings.length > 1) {
             thisfinger.strings.slice(1).map((x) => {
-              const [c, l] = this.makeFinger(fingerno, x, thisfinger.fret)
+              const [c, l] = this.makeFinger(fingerno, x, thisfinger.fret - offset)
               svg.appendChild(c)
               svg.appendChild(l)
               this.fadein(c)
@@ -112,8 +130,8 @@
           }
 
           // move first listed
-          this.move(prevshp[0], thisfinger.strings[0], thisfinger.fret)
-          this.move(prevtxt[0], thisfinger.strings[0], thisfinger.fret)
+          this.move(prevshp[0], thisfinger.strings[0], thisfinger.fret - offset)
+          this.move(prevtxt[0], thisfinger.strings[0], thisfinger.fret - offset)
         } 
       },
       makeFinger(fingerno, string, fret) {
@@ -158,6 +176,7 @@
         const els = Array.prototype.slice.call(svg.getElementsByClassName("note"))
 
         const newlbl = [1,2,3,4,5,6].map((x) => {
+          if (newVal.closed.includes(x)) return ""
           const z = newVal.fingers.filter((y) => y.strings.includes(x)).map((y) => y.fret)
           if (z.length == 0) return this.note(x, 0)
           else return this.note(x, Math.max(...z))
@@ -214,6 +233,11 @@
         const xs = this.seq(pos1[0], pos2[0], steps)
         const ys = this.seq(pos1[1], pos2[1], steps)
         return xs.map((e, i) => [e, ys[i]])
+      },
+      fretOffset(x) {
+        const frets = x.fingers.map((z) => z.fret)
+        if (Math.max(...frets) <= 5) return 0
+        else return (Math.min(...frets) - 2)
       },
       async fadeout(el) {
         for (var i = 0; i < this.frames; i++) {
@@ -277,6 +301,12 @@
     <line class="fret" x1="1" y1="5.5" x2="6" y2="5.5" />
     <line class="fret" x1="1" y1="7"   x2="6" y2="7" />
     <line class="fret" x1="1" y1="8.5" x2="6" y2="8.5" />
+
+    <text class="fret-number" x="0.55" y="1.75" text-anchor="middle" alignment-baseline="middle">1</text>
+    <text class="fret-number" x="0.55" y="3.25" text-anchor="middle" alignment-baseline="middle">2</text>
+    <text class="fret-number" x="0.55" y="4.75" text-anchor="middle" alignment-baseline="middle">3</text>
+    <text class="fret-number" x="0.55" y="6.25" text-anchor="middle" alignment-baseline="middle">4</text>
+    <text class="fret-number" x="0.55" y="7.75" text-anchor="middle" alignment-baseline="middle">5</text>
 
     <line class="string string-high-e" x1="6" y1="1" x2="6" y2="8.5" />
     <line class="string string-b"      x1="5" y1="1" x2="5" y2="8.5" />
@@ -350,6 +380,10 @@
 
   :deep(.finger-5) {
     fill: #648FFF;
+  }
+
+  :deep(text.fret-number) {
+    font-size: 2%;
   }
 
   :deep(text.finger) {
