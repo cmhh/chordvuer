@@ -235,12 +235,33 @@ export const chords = {
     open: [6, 3, 2, 1],
     closed: []
   },
-  F: {
+  F_1: {
     name: "F",
     fingers: [
       {finger: 1, fret: 1, strings: [2,1]},
       {finger: 2, fret: 2, strings: [3]},
       {finger: 3, fret: 3, strings: [4]}
+    ],
+    open: [],
+    closed: [6,5]
+  },
+  F_2: {
+    name: "F",
+    fingers: [
+      {finger: 1, fret: 1, strings: [6,5,4,3,2,1]},
+      {finger: 2, fret: 2, strings: [3]},
+      {finger: 3, fret: 3, strings: [5]},
+      {finger: 4, fret: 3, strings: [4]}
+    ],
+    open: [],
+    closed: []
+  },
+  F_3: {
+    name: "F",
+    fingers: [
+      {finger: 1, fret: 1, strings: [6]},
+      {finger: 3, fret: 3, strings: [5]},
+      {finger: 4, fret: 3, strings: [4]}
     ],
     open: [],
     closed: [6,5]
@@ -280,7 +301,8 @@ export const chords = {
     fingers: [
       {finger: 1, fret: 2, strings: [5]},
       {finger: 2, fret: 3, strings: [6]},
-      {finger: 3, fret: 3, strings: [1]}
+      {finger: 3, fret: 3, strings: [2]},
+      {finger: 4, fret: 3, strings: [1]}
     ],
     open: [3, 4],
     closed: []
@@ -328,7 +350,7 @@ export const powerchords = {
   D5_2: chords.D5_2,
   E5_1: chords.E5_1,
   E5_2: chords.E5_2,
-  F: chords.F,
+  F: chords.F_3,
   "F♯5": chords["F♯5"], 
   "G♭5": chords["G♭5"]
 }
