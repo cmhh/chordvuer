@@ -142,7 +142,7 @@
         circ.setAttributeNS(null, "class", `finger finger-${fingerno}`)
         circ.setAttributeNS(null, "cx", xy[0])
         circ.setAttributeNS(null, "cy", xy[1])
-        circ.setAttributeNS(null, "r", "0.3")
+        circ.setAttributeNS(null, "r", "15")
         circ.setAttributeNS(null, "opacity", 0)
 
         const lbl = document.createElementNS(ns, "text")
@@ -192,7 +192,7 @@
       XY(string, fret) {
         const X = 6 - string + 1
         const Y = 1 + (1.5 / 2) + (fret - 1) * (1.5)
-        return [X, Y]
+        return [X * 50, Y * 50]
       },
       note(string, fret) {
         function next(note) {
@@ -290,46 +290,46 @@
 </script>
 
 <template>
-  <svg :id="id" class="chord" viewBox="0 0 7 9.5" > 
+  <svg :id="id" class="chord" viewBox="0 0 350 475" height="auto" width="auto"> 
     <!-- static objects -->
-    <rect class="fretboard" x="1" y="1" width="5" height="7.5" />
+    <rect class="fretboard" x="50" y="50" width="250" height="375" />
 
-    <line class="nut"  x1="1" y1="1"  x2="6" y2="1" />
+    <line class="nut"  x1="50" y1="50"  x2="300" y2="50" />
 
-    <line class="fret" x1="1" y1="2.5" x2="6" y2="2.5" />
-    <line class="fret" x1="1" y1="4"   x2="6" y2="4" />
-    <line class="fret" x1="1" y1="5.5" x2="6" y2="5.5" />
-    <line class="fret" x1="1" y1="7"   x2="6" y2="7" />
-    <line class="fret" x1="1" y1="8.5" x2="6" y2="8.5" />
+    <line class="fret" x1="50" y1="125" x2="300" y2="125" />
+    <line class="fret" x1="50" y1="200" x2="300" y2="200" />
+    <line class="fret" x1="50" y1="275" x2="300" y2="275" />
+    <line class="fret" x1="50" y1="350" x2="300" y2="350" />
+    <line class="fret" x1="50" y1="425" x2="300" y2="425" />
 
-    <text class="fret-number" x="0.55" y="1.75" text-anchor="middle" alignment-baseline="middle">1</text>
-    <text class="fret-number" x="0.55" y="3.25" text-anchor="middle" alignment-baseline="middle">2</text>
-    <text class="fret-number" x="0.55" y="4.75" text-anchor="middle" alignment-baseline="middle">3</text>
-    <text class="fret-number" x="0.55" y="6.25" text-anchor="middle" alignment-baseline="middle">4</text>
-    <text class="fret-number" x="0.55" y="7.75" text-anchor="middle" alignment-baseline="middle">5</text>
+    <text class="fret-number" x="27.5" y="87.5"  text-anchor="middle" alignment-baseline="middle">1</text>
+    <text class="fret-number" x="27.5" y="162.5" text-anchor="middle" alignment-baseline="middle">2</text>
+    <text class="fret-number" x="27.5" y="237.5" text-anchor="middle" alignment-baseline="middle">3</text>
+    <text class="fret-number" x="27.5" y="312.5" text-anchor="middle" alignment-baseline="middle">4</text>
+    <text class="fret-number" x="27.5" y="387.5" text-anchor="middle" alignment-baseline="middle">5</text>
 
-    <line class="string string-high-e" x1="6" y1="1" x2="6" y2="8.5" />
-    <line class="string string-b"      x1="5" y1="1" x2="5" y2="8.5" />
-    <line class="string string-g"      x1="4" y1="1" x2="4" y2="8.5" />
-    <line class="string string-d"      x1="3" y1="1" x2="3" y2="8.5" />
-    <line class="string string-a"      x1="2" y1="1" x2="2" y2="8.5" />
-    <line class="string string-low-e"  x1="1" y1="1" x2="1" y2="8.5" />
+    <line class="string string-high-e" x1="300" y1="50" x2="300" y2="425" />
+    <line class="string string-b"      x1="250" y1="50" x2="250" y2="425" />
+    <line class="string string-g"      x1="200" y1="50" x2="200" y2="425" />
+    <line class="string string-d"      x1="150" y1="50" x2="150" y2="425" />
+    <line class="string string-a"      x1="100" y1="50" x2="100" y2="425" />
+    <line class="string string-low-e"  x1="50"  y1="50" x2="50"  y2="425" />
 
     <!-- dynamic objects -->
-    <text class="chord-name" x="3.5" y="0" text-anchor="middle" alignment-baseline="hanging"></text>
-    <text class="strike strike-high-e" x="6" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
-    <text class="strike strike-b"      x="5" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
-    <text class="strike strike-g"      x="4" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
-    <text class="strike strike-d"      x="3" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
-    <text class="strike strike-a"      x="2" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
-    <text class="strike strike-low-e"  x="1" y="1" dy="-0.2" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="chord-name"           x="175" y="0"  text-anchor="middle" alignment-baseline="hanging"></text>
+    <text class="strike strike-high-e" x="300" y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="strike strike-b"      x="250" y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="strike strike-g"      x="200" y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="strike strike-d"      x="150" y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="strike strike-a"      x="100" y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
+    <text class="strike strike-low-e"  x="50"  y="50" dy="-10" text-anchor="middle" alignment-baseline="top"></text>
 
-    <text class="note note-high-e" x="6" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">E</text>
-    <text class="note note-b"      x="5" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">B</text>
-    <text class="note note-g"      x="4" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">G</text>
-    <text class="note note-d"      x="3" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">D</text>
-    <text class="note note-a"      x="2" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">A</text>
-    <text class="note note-low-e"  x="1" y="8.5" dy="0.2" text-anchor="middle" alignment-baseline="hanging">E</text>
+    <text class="note note-high-e" x="300" y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">E</text>
+    <text class="note note-b"      x="250" y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">B</text>
+    <text class="note note-g"      x="200" y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">G</text>
+    <text class="note note-d"      x="150" y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">D</text>
+    <text class="note note-a"      x="100" y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">A</text>
+    <text class="note note-low-e"  x="50"  y="425" dy="10" text-anchor="middle" alignment-baseline="hanging">E</text>
   </svg>
 </template>
 
@@ -341,7 +341,7 @@
   }
 
   .chord-name {
-    font-size: 3%;
+    font-size: 150%;
   }
 
   .fretboard {
@@ -349,13 +349,13 @@
   }
 
   line {
-    stroke-width: 0.1;
+    stroke-width: 5;
     stroke: black;
     stroke-linecap: round;
   }
 
   .nut {
-    stroke-width: 0.2
+    stroke-width: 10
   }
 
   .fret {
@@ -383,16 +383,16 @@
   }
 
   :deep(text.fret-number) {
-    font-size: 2%;
+    font-size: 100%;
   }
 
   :deep(text.finger) {
-    font-size: 2%;
+    font-size: 100%;
     font-weight: bold;
     fill: #FFFFFF;
   }
 
   text.strike, text.note {
-    font-size: 2%;
+    font-size: 100%;
   }
 </style>
